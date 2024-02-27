@@ -26,6 +26,13 @@ class MyHomePage extends StatefulWidget{
 }
 
 class _MyHomePageState extends State<MyHomePage>{
+  List<String> checklistItems = [
+    'Time to water your ...!', //... will be replaced with the user inputed plant
+    'Time to repot your ...!',
+    'Weekly Bug Check!',
+    'Check for dead leaves'
+  ];
+  List<bool> checklistItemStates = List.filled(4, false);
 
   @override
   Widget build(BuildContext context){
@@ -33,10 +40,47 @@ class _MyHomePageState extends State<MyHomePage>{
       appBar: AppBar(
         title: const Text('Plants')
       ),
-      body: Center(
-        child: Text('Welcome to Plant Weekly!⋆.⭒⋆🪴⋆˚.⋆')
+      body:Column(
+       children:[
+        Center(
+        child: Text('Welcome to Plant Weekly!⋆.⭒⋆🪴⋆˚.⋆'),
+        ),
+       // SizedBox(height: 20),
+        Card(
+          //width: double.infinity,
+          margin: EdgeInsets.all(16),
+          //child:Card(
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:[
+                Text(
+                  '🌱Weekly To-Do🌱',
+                  style: TextStyle(fontSize:20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    checklistItems.length,
+                    (index) => CheckboxListTile(
+                      title: Text(checklistItems[index]),
+                      value: checklistItemStates[index],
+                      onChanged: (bool? value) {
+                        setState((){
+                          checklistItemStates[index] = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+       ],
       ),
-      //Need to add checklist bar
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -57,14 +101,13 @@ class _MyHomePageState extends State<MyHomePage>{
           ListTile(
             title: Text('Plant Diseases'),
           ),
-          //....
-          ]
+          //ListTile(....)
+          ],
         ),
       ),
     );
   }
 }
-
 
 
 //used for custom colors
