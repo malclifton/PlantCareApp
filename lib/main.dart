@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'watering_schedule.dart';
-import 'sqlite_service.dart';
+import 'plant_diseases.dart';
+import 'plant_caretips.dart';
 
 void main() {
   runApp(const MyPlantApp());
 }
 
-class MyPlantApp extends StatelessWidget{
-  const MyPlantApp ({super.key});
+class MyPlantApp extends StatelessWidget {
+  const MyPlantApp({super.key});
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Plant Weekly',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(Color(0xffccd5ae)),
+        primarySwatch: createMaterialColor(const Color(0xffccd5ae)),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
-class MyHomePage extends StatefulWidget{
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>{
+class _MyHomePageState extends State<MyHomePage> {
   List<String> checklistItems = [
     'Time to water your ...!', //... will be replaced with the user inputed plant
     'Time to repot your ...!',
@@ -35,80 +39,104 @@ class _MyHomePageState extends State<MyHomePage>{
   List<bool> checklistItemStates = List.filled(4, false);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Plants')
-      ),
-      body:Column(
-       children:[
-        Center(
-        child: Text('Welcome to Plant Weekly!⋆.⭒⋆🪴⋆˚.⋆'),
-        ),
-       // SizedBox(height: 20),
-        Card(
-          //width: double.infinity,
-          margin: EdgeInsets.all(16),
-          //child:Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:[
-                Text(
-                  '🌱Weekly To-Do🌱',
-                  style: TextStyle(fontSize:20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Column(
+      appBar: AppBar(title: const Text('Plants')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Center(
+              child: Text('Welcome to Plant Weekly!⋆.⭒⋆🪴⋆˚.⋆'),
+            ),
+            Card(
+              margin: const EdgeInsets.all(16),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                    checklistItems.length,
-                    (index) => CheckboxListTile(
-                      title: Text(checklistItems[index]),
-                      value: checklistItemStates[index],
-                      onChanged: (bool? value) {
-                        setState((){
-                          checklistItemStates[index] = value!;
-                        });
-                      },
+                  children: [
+                    const Text(
+                      '🌱Weekly To-Do🌱',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        checklistItems.length,
+                        (index) => CheckboxListTile(
+                          title: Text(checklistItems[index]),
+                          value: checklistItemStates[index],
+                          onChanged: (bool? value) {
+                            setState(() {
+                              checklistItemStates[index] = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const WateringSchedulePage()),
+                      );
+                    },
+                    child: Container(
+                      color: const Color(0xffccd5ae),
+                      child: const Center(child: Text('Watering Schedule')),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlantDiseasesPage()),
+                      );
+                    },
+                    child: Container(
+                      color: const Color(0xffccd5ae),
+                      child: const Center(child: Text('Plant Diseases')),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlantCareTips()),
+                      );
+                    },
+                    child: Container(
+                      color: const Color(0xffccd5ae),
+                      child: const Center(child: Text('Plant Care Tips')),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-       ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Plant Weekly'),
-              decoration:BoxDecoration(
-                color: Color(0xffccd5ae),
-              ),
-            ),
-    //Tiles that lead to the different pages 
-          ListTile(
-            title: Text('Watering Schedule'),
-            //onTap: (){
-              //watering_schedule.dart
-           // },
-          ),
-          ListTile(
-            title: Text('Plant Diseases'),
-          ),
-          //ListTile(....)
           ],
         ),
       ),
     );
   }
 }
-
 
 //used for custom colors
 MaterialColor createMaterialColor(Color color) {
