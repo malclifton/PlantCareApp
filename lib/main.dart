@@ -8,7 +8,8 @@ void main() {
 }
 
 class MyPlantApp extends StatelessWidget {
-  const MyPlantApp({super.key});
+  const MyPlantApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +24,7 @@ class MyPlantApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -64,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         checklistItems.length,
-                        (index) => CheckboxListTile(
+                            (index) => CheckboxListTile(
                           title: Text(checklistItems[index]),
                           value: checklistItemStates[index],
                           onChanged: (bool? value) {
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const WateringSchedulePage()),
+                        MaterialPageRoute(builder: (context) => WateringSchedulePage()),
                       );
                     },
                     child: Container(
@@ -120,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const PlantCareTips()),
+                        MaterialPageRoute(builder: (context) => PlantCareTips()), // Removed 'const' here
                       );
                     },
                     child: Container(
