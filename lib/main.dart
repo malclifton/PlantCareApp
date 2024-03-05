@@ -31,8 +31,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> checklistItems = [
-    'Time to water your ...!', //... will be replaced with the user inputed plant
-    'Time to repot your ...!',
+    'Check if your plants need to be watered!',
+    'Check if you need to repot your plants!',
     'Weekly Bug Check!',
     'Check for dead leaves'
   ];
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const PlantDiseasesPage()),
+                        MaterialPageRoute(builder: (context) => PlantDiseasesPage()),
                       );
                     },
                     child: Container(
