@@ -95,7 +95,7 @@ class CareTipDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Care Tip Detail'),
+        title: Text('Care Tip Details'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
